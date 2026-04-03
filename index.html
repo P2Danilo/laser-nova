@@ -14,7 +14,6 @@
   --pending: #4a9eff; --process: #f0a050; --ready: #a78bfa;
   --delivered: #34d399; --cancelled: #f87171; --radius: 12px;
 }
-html { height: 100%; }
 body { font-family: 'Mulish', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
 /* LOADER */
@@ -35,7 +34,91 @@ body { font-family: 'Mulish', sans-serif; background: var(--bg); color: var(--te
 @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
 .loader-text { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
 
+/* LOGIN */
+#login-screen {
+  position: fixed; inset: 0; background: var(--bg);
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 500; gap: 0;
+}
+#login-screen.show { display: flex; }
+
+.login-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.login-icon {
+  width: 64px; height: 64px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.login-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.login-title span { color: var(--accent); }
+
+.login-sub {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 36px;
+  line-height: 1.5;
+}
+
+.btn-google {
+  width: 100%;
+  background: white;
+  color: #1a1a1a;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-google:hover { opacity: 0.92; transform: translateY(-1px); }
+.btn-google:active { transform: translateY(0); }
+
+.google-icon {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
 /* HEADER */
+#app { display: none; }
+#app.show { display: block; }
+
 header {
   background: var(--surface); border-bottom: 1px solid var(--border);
   padding: 0 24px; display: flex; align-items: center; justify-content: space-between;
@@ -50,6 +133,22 @@ header {
 .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
 .logo-text span { color: var(--accent); }
 .header-right { display: flex; align-items: center; gap: 10px; }
+
+.user-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  padding: 5px 12px 5px 6px; border-radius: 100px;
+  font-size: 12px; color: var(--muted);
+}
+.user-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: white; overflow: hidden;
+  flex-shrink: 0;
+}
+.user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
 .sync-indicator {
   display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted);
   background: var(--surface2); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px;
@@ -57,18 +156,27 @@ header {
 .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; animation: pulse 2s infinite; }
 .sync-dot.offline { background: var(--cancelled); animation: none; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
 .stats-pill {
   background: var(--surface2); border: 1px solid var(--border); padding: 5px 12px;
   border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--muted);
   display: flex; align-items: center; gap: 6px;
 }
 .stats-pill strong { color: var(--accent2); }
+
 .btn-new {
   background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; border: none;
   padding: 8px 18px; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700;
   font-size: 13px; cursor: pointer; transition: opacity 0.2s, transform 0.15s;
 }
 .btn-new:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.btn-logout {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  padding: 6px 12px; border-radius: 8px; font-family: 'Mulish', sans-serif;
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+}
+.btn-logout:hover { border-color: var(--cancelled); color: var(--cancelled); }
 
 /* KANBAN */
 .kanban-wrapper { padding: 24px; overflow-x: auto; min-height: calc(100vh - 64px); }
@@ -165,6 +273,7 @@ textarea { resize: vertical; min-height: 80px; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
 @media (max-width: 600px) {
   header { padding: 0 14px; }
   .logo-text { font-size: 15px; }
@@ -172,78 +281,105 @@ textarea { resize: vertical; min-height: 80px; }
   .kanban-wrapper { padding: 12px; }
   .column { width: 255px; }
   .form-grid { grid-template-columns: 1fr; }
+  .login-box { padding: 36px 24px; }
 }
 </style>
 </head>
 <body>
 
+<!-- LOADER -->
 <div id="loader">
   <div class="loader-logo">Láser <span>Nova</span></div>
   <div class="loader-bar"></div>
-  <div class="loader-text">Conectando con la base de datos...</div>
+  <div class="loader-text">Iniciando...</div>
 </div>
 
-<header>
-  <div class="logo">
-    <div class="logo-icon">🔥</div>
-    <div class="logo-text">Láser <span>Nova</span></div>
-  </div>
-  <div class="header-right">
-    <div class="sync-indicator">
-      <div class="sync-dot" id="sync-dot"></div>
-      <span id="sync-text">En línea</span>
-    </div>
-    <div class="stats-pill">Pendientes: <strong id="count-pending">0</strong></div>
-    <button class="btn-new" onclick="openModal()">+ Nuevo pedido</button>
-  </div>
-</header>
-
-<div class="kanban-wrapper">
-  <div class="kanban">
-    <div class="column">
-      <div class="col-header">
-        <div class="col-title"><div class="col-dot" style="background:var(--pending)"></div>Pendiente</div>
-        <div class="col-count" id="cnt-pendiente">0</div>
-      </div>
-      <div class="col-body" id="body-pendiente"></div>
-    </div>
-    <div class="column">
-      <div class="col-header">
-        <div class="col-title"><div class="col-dot" style="background:var(--process)"></div>En proceso</div>
-        <div class="col-count" id="cnt-proceso">0</div>
-      </div>
-      <div class="col-body" id="body-proceso"></div>
-    </div>
-    <div class="column">
-      <div class="col-header">
-        <div class="col-title"><div class="col-dot" style="background:var(--ready)"></div>Listo para entregar</div>
-        <div class="col-count" id="cnt-listo">0</div>
-      </div>
-      <div class="col-body" id="body-listo"></div>
-    </div>
-    <div class="column">
-      <div class="col-header">
-        <div class="col-title"><div class="col-dot" style="background:var(--delivered)"></div>Entregado</div>
-        <div class="col-count" id="cnt-entregado">0</div>
-      </div>
-      <div class="col-body" id="body-entregado"></div>
-    </div>
-    <div class="column">
-      <div class="col-header">
-        <div class="col-title"><div class="col-dot" style="background:var(--cancelled)"></div>Cancelado</div>
-        <div class="col-count" id="cnt-cancelado">0</div>
-      </div>
-      <div class="col-body" id="body-cancelado"></div>
-    </div>
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-icon">🔥</div>
+    <div class="login-title">Láser <span>Nova</span></div>
+    <div class="login-sub">Gestión de pedidos<br>Inicia sesión para continuar</div>
+    <button class="btn-google" onclick="loginGoogle()">
+      <svg class="google-icon" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Entrar con Google
+    </button>
+    <div class="login-footer">Solo tú tienes acceso a esta app</div>
   </div>
 </div>
 
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🔥</div>
+      <div class="logo-text">Láser <span>Nova</span></div>
+    </div>
+    <div class="header-right">
+      <div class="sync-indicator">
+        <div class="sync-dot" id="sync-dot"></div>
+        <span id="sync-text">En línea</span>
+      </div>
+      <div class="stats-pill">Pendientes: <strong id="count-pending">0</strong></div>
+      <div class="user-pill">
+        <div class="user-avatar" id="user-avatar"></div>
+        <span id="user-name">Usuario</span>
+      </div>
+      <button class="btn-new" onclick="openModal()">+ Nuevo pedido</button>
+      <button class="btn-logout" onclick="logoutUser()">Salir</button>
+    </div>
+  </header>
+
+  <div class="kanban-wrapper">
+    <div class="kanban">
+      <div class="column">
+        <div class="col-header">
+          <div class="col-title"><div class="col-dot" style="background:var(--pending)"></div>Pendiente</div>
+          <div class="col-count" id="cnt-pendiente">0</div>
+        </div>
+        <div class="col-body" id="body-pendiente"></div>
+      </div>
+      <div class="column">
+        <div class="col-header">
+          <div class="col-title"><div class="col-dot" style="background:var(--process)"></div>En proceso</div>
+          <div class="col-count" id="cnt-proceso">0</div>
+        </div>
+        <div class="col-body" id="body-proceso"></div>
+      </div>
+      <div class="column">
+        <div class="col-header">
+          <div class="col-title"><div class="col-dot" style="background:var(--ready)"></div>Listo para entregar</div>
+          <div class="col-count" id="cnt-listo">0</div>
+        </div>
+        <div class="col-body" id="body-listo"></div>
+      </div>
+      <div class="column">
+        <div class="col-header">
+          <div class="col-title"><div class="col-dot" style="background:var(--delivered)"></div>Entregado</div>
+          <div class="col-count" id="cnt-entregado">0</div>
+        </div>
+        <div class="col-body" id="body-entregado"></div>
+      </div>
+      <div class="column">
+        <div class="col-header">
+          <div class="col-title"><div class="col-dot" style="background:var(--cancelled)"></div>Cancelado</div>
+          <div class="col-count" id="cnt-cancelado">0</div>
+        </div>
+        <div class="col-body" id="body-cancelado"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
 <div class="overlay" id="overlay" onclick="closeIfOutside(event)">
   <div class="modal">
-    <div class="modal-title">
-      <span>✦</span>
-      <span id="modal-heading">Nuevo pedido</span>
-    </div>
+    <div class="modal-title"><span>✦</span><span id="modal-heading">Nuevo pedido</span></div>
     <div class="form-grid">
       <div class="form-group">
         <label>Cliente</label>
@@ -295,6 +431,7 @@ textarea { resize: vertical; min-height: 80px; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getDatabase, ref, onValue, set, remove, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -308,17 +445,71 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getDatabase(app);
-const pedidosRef = ref(db, 'pedidos');
+const provider = new GoogleAuthProvider();
 
 const typeLabels = { grabado:'Grabado', sublimacion:'Sublimación', dtf:'DTF', digital:'Digital', otro:'Otro' };
 let orders = {};
 let editingId = null;
+let dbListener = null;
 
-const syncDot = document.getElementById('sync-dot');
-const syncText = document.getElementById('sync-text');
-window.addEventListener('online', () => { syncDot.classList.remove('offline'); syncText.textContent = 'En línea'; });
-window.addEventListener('offline', () => { syncDot.classList.add('offline'); syncText.textContent = 'Sin conexión'; });
+// Sync indicator
+window.addEventListener('online', () => { document.getElementById('sync-dot').classList.remove('offline'); document.getElementById('sync-text').textContent = 'En línea'; });
+window.addEventListener('offline', () => { document.getElementById('sync-dot').classList.add('offline'); document.getElementById('sync-text').textContent = 'Sin conexión'; });
+
+// Auth state
+onAuthStateChanged(auth, (user) => {
+  document.getElementById('loader').classList.add('hide');
+  if (user) {
+    showApp(user);
+  } else {
+    showLogin();
+  }
+});
+
+function showLogin() {
+  document.getElementById('login-screen').classList.add('show');
+  document.getElementById('app').classList.remove('show');
+  if (dbListener) { dbListener(); dbListener = null; }
+}
+
+function showApp(user) {
+  document.getElementById('login-screen').classList.remove('show');
+  document.getElementById('app').classList.add('show');
+
+  // User info
+  const nameEl = document.getElementById('user-name');
+  const avatarEl = document.getElementById('user-avatar');
+  const firstName = user.displayName ? user.displayName.split(' ')[0] : 'Usuario';
+  nameEl.textContent = firstName;
+  if (user.photoURL) {
+    avatarEl.innerHTML = `<img src="${user.photoURL}" alt="${firstName}">`;
+  } else {
+    avatarEl.textContent = firstName.charAt(0).toUpperCase();
+  }
+
+  // Load data
+  const pedidosRef = ref(db, 'pedidos');
+  dbListener = onValue(pedidosRef, (snap) => {
+    orders = snap.val() || {};
+    renderAll();
+  });
+}
+
+window.loginGoogle = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (e) {
+    alert('Error al iniciar sesión. Intenta de nuevo.');
+    console.error(e);
+  }
+};
+
+window.logoutUser = async () => {
+  if (!confirm('¿Cerrar sesión?')) return;
+  await signOut(auth);
+};
 
 function formatDate(d) { if (!d) return ''; const [y,m,dd] = d.split('-'); return `${dd}/${m}/${y}`; }
 function formatPrice(v) { if (!v) return '—'; return '$' + Number(v).toLocaleString('es-CO'); }
@@ -346,8 +537,8 @@ function renderAll() {
     card.className = 'card';
     card.innerHTML = `
       <div class="card-actions">
-        <button class="btn-icon" onclick="window._editOrder('${id}',event)">✎</button>
-        <button class="btn-icon del" onclick="window._deleteOrder('${id}',event)">✕</button>
+        <button class="btn-icon" onclick="window._edit('${id}',event)">✎</button>
+        <button class="btn-icon del" onclick="window._del('${id}',event)">✕</button>
       </div>
       <div class="card-top">
         <div class="card-client">${o.client||'Sin nombre'}</div>
@@ -360,7 +551,7 @@ function renderAll() {
       </div>
       ${o.phone ? `<div class="card-phone">📱 ${o.phone}</div>` : ''}
     `;
-    card.addEventListener('click', () => window._editOrder(id));
+    card.addEventListener('click', () => window._edit(id));
     body.appendChild(card);
   });
   document.getElementById('count-pending').textContent = pendingCount;
@@ -370,34 +561,19 @@ function renderAll() {
   });
 }
 
-onValue(pedidosRef, (snap) => {
-  orders = snap.val() || {};
-  renderAll();
-  document.getElementById('loader').classList.add('hide');
-}, () => {
-  syncDot.classList.add('offline');
-  syncText.textContent = 'Sin conexión';
-  document.getElementById('loader').classList.add('hide');
-});
-
-function clearForm() {
-  ['f-client','f-phone','f-price','f-desc','f-date'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-type').value = 'grabado';
-  document.getElementById('f-status').value = 'pendiente';
-}
-
 window.openModal = () => {
   editingId = null;
   document.getElementById('modal-heading').textContent = 'Nuevo pedido';
-  clearForm();
+  ['f-client','f-phone','f-price','f-desc','f-date'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-type').value = 'grabado';
+  document.getElementById('f-status').value = 'pendiente';
   document.getElementById('overlay').classList.add('active');
 };
 
-window._editOrder = (id, e) => {
+window._edit = (id, e) => {
   if (e) e.stopPropagation();
   editingId = id;
-  const o = orders[id];
-  if (!o) return;
+  const o = orders[id]; if (!o) return;
   document.getElementById('modal-heading').textContent = 'Editar pedido';
   document.getElementById('f-client').value = o.client || '';
   document.getElementById('f-phone').value = o.phone || '';
@@ -409,7 +585,7 @@ window._editOrder = (id, e) => {
   document.getElementById('overlay').classList.add('active');
 };
 
-window._deleteOrder = (id, e) => {
+window._del = (id, e) => {
   if (e) e.stopPropagation();
   if (!confirm('¿Eliminar este pedido?')) return;
   remove(ref(db, 'pedidos/' + id));
@@ -422,8 +598,7 @@ window.saveOrder = () => {
   const client = document.getElementById('f-client').value.trim();
   if (!client) { document.getElementById('f-client').focus(); return; }
   const order = {
-    client,
-    phone: document.getElementById('f-phone').value.trim(),
+    client, phone: document.getElementById('f-phone').value.trim(),
     type: document.getElementById('f-type').value,
     price: document.getElementById('f-price').value,
     desc: document.getElementById('f-desc').value.trim(),
@@ -431,6 +606,7 @@ window.saveOrder = () => {
     status: document.getElementById('f-status').value,
     createdAt: editingId ? (orders[editingId]?.createdAt || Date.now()) : Date.now()
   };
+  const pedidosRef = ref(db, 'pedidos');
   if (editingId) { set(ref(db, 'pedidos/' + editingId), order); }
   else { push(pedidosRef, order); }
   window.closeModal();
